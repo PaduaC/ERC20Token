@@ -1,0 +1,25 @@
+{
+  "name": "erc20",
+  "version": "1.0.0",
+  "description": "Creating a token using the ERC20 standard on the Ethereum protocol",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaduaC/ERC20Token.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaduaC/ERC20Token/issues"
+  },
+  "homepage": "https://github.com/PaduaC/ERC20Token#readme",
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.10"
+  }
+}
