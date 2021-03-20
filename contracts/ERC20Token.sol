@@ -62,7 +62,7 @@ contract ERC20Token is ERC20Interface {
         override
         returns (bool)
     {
-        require(balances[msg.sender] >= value);
+        require(balances[msg.sender] >= value, "balance too low");
         balances[msg.sender] -= value;
         balances[to] += value;
         emit Transfer(msg.sender, to, value);
@@ -75,7 +75,8 @@ contract ERC20Token is ERC20Interface {
         uint256 value
     ) public override returns (bool) {
         uint256 _allowance = allowed[from][msg.sender];
-        require(balances[msg.sender] >= value && _allowance >= value);
+        require(_allowance >= value, "allowance too low");
+        require(balances[from] >= value, "token balance too low");
         allowed[from][msg.sender] -= value;
         balances[msg.sender] -= value;
         balances[to] += value;
@@ -88,7 +89,6 @@ contract ERC20Token is ERC20Interface {
         override
         returns (bool)
     {
-        require(spender != msg.sender);
         allowed[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
