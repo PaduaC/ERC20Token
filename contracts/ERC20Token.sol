@@ -40,7 +40,7 @@ contract ERC20Token is ERC20Interface {
     string public name;
     string public symbol;
     uint8 public decimals;
-    uint256 public override totalSupply;
+    uint256 public _totalSupply;
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowed;
 
@@ -48,13 +48,13 @@ contract ERC20Token is ERC20Interface {
         string memory _name,
         string memory _symbol,
         uint8 _decimals,
-        uint256 _totalSupply
+        uint256 _initialSupply
     ) {
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
-        totalSupply = _totalSupply;
-        balances[msg.sender] = _totalSupply;
+        _totalSupply = _initialSupply;
+        balances[msg.sender] = _initialSupply;
     }
 
     function transfer(address to, uint256 value)
@@ -78,7 +78,7 @@ contract ERC20Token is ERC20Interface {
         require(_allowance >= value, "allowance too low");
         require(balances[from] >= value, "token balance too low");
         allowed[from][msg.sender] -= value;
-        balances[msg.sender] -= value;
+        balances[from] -= value;
         balances[to] += value;
         emit Transfer(msg.sender, to, value);
         return true;
@@ -105,5 +105,9 @@ contract ERC20Token is ERC20Interface {
 
     function balanceOf(address owner) public view override returns (uint256) {
         return balances[owner];
+    }
+
+    function totalSupply() external view override returns (uint256) {
+        return _totalSupply;
     }
 }
